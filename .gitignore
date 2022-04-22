@@ -1,2 +1,4 @@
 node_modules
 .DS_Store
+web/style.css
+web/style.css.map
