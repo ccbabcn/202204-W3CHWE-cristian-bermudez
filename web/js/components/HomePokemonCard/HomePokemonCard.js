@@ -16,7 +16,7 @@ class HomePokemonCard extends Component {
   render() {
     this.element.innerHTML = `
   
-    <img class="pokemon-card__image"
+    <img class="pokemons-container__image"
       src="${this.image}"
       alt="Image of Pokémon ${this.name}">
     <h2>${this.name}</h2>
