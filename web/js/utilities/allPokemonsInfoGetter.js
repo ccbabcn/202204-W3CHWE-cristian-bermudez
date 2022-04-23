@@ -24,6 +24,7 @@ const getEachPokemonData = async () => {
       const {
         name,
         id,
+        order,
         sprites: {
           other: {
             home: { front_default: image },
@@ -36,7 +37,9 @@ const getEachPokemonData = async () => {
         },
       } = getActualData;
 
-      console.table(id, name, image, type);
+      console.table(order, id, name, image, type);
+
+      console.table({ order, id, name, image, type });
     };
 
     getActualPokemonData(url);
