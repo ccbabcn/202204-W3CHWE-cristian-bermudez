@@ -1,5 +1,6 @@
 import HomePokemonCard from "../HomePokemonCard/HomePokemonCard.js";
 import Component from "../Component.js";
+import PokemonsDataGetter from "../../utilities/PokemonsDataGetter.js";
 
 class AppComponent extends Component {
   constructor(parentElement, limit) {
@@ -9,66 +10,53 @@ class AppComponent extends Component {
     this.render();
   }
 
-  render() {
+  async render() {
     this.element.innerHTML = `
-<ul class="pokemons-container__list">
-`;
+      <ul class="pokemons-container__list">
+    `;
     const pokemonListContainer = document.querySelector(
       ".pokemons-container__list"
     );
-    const totalNumberPokemons = this.limit;
-    const fetchAllPokeData = async (numberOfPokemons) => {
-      const allPokeResponse = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${numberOfPokemons}`
-      );
-      const pokedata = await allPokeResponse.json();
-      return pokedata;
-    };
 
-    const getEachPokemonData = async () => {
-      const eachPokeResponse = await fetchAllPokeData(totalNumberPokemons);
+    const pokemonsData = new PokemonsDataGetter(
+      "https://pokeapi.co/api/v2/pokemon/"
+    );
+    const { results } = await pokemonsData.getShownPokemonsData();
 
-      eachPokeResponse.results.forEach(({ url }) => {
-        const fetchActualPokeData = async (actualUrl) => {
-          const actualPokeInfo = await fetch(actualUrl);
-          const thispokedata = await actualPokeInfo.json();
-          return thispokedata;
-        };
-
-        const getActualPokemonData = async (actualUrl) => {
-          const getActualData = await fetchActualPokeData(actualUrl);
-
-          const {
-            name,
-            id,
-            order,
-            sprites: {
-              other: {
-                home: { front_default: image },
-              },
+    const actualPokemonData = Promise.all(
+      results.map(async (listedPokemon) => {
+        const listedPokemonData = await pokemonsData.getActualPokemonData(
+          listedPokemon.url.split("/").slice(-2, -1).pop()
+        );
+        const {
+          name,
+          id,
+          order,
+          sprites: {
+            other: {
+              home: { front_default: image },
             },
-            types: {
-              0: {
-                type: { name: type },
-              },
+          },
+          types: {
+            0: {
+              type: { name: type },
             },
-          } = getActualData;
-          new HomePokemonCard(
-            order,
-            id,
-            name,
-            type,
-            image,
-            pokemonListContainer
-          );
-        };
+          },
+        } = listedPokemonData;
 
-        getActualPokemonData(url);
-      });
-
-      return eachPokeResponse.results;
-    };
-    getEachPokemonData();
+        const pokemonFiltered = { order, id, name, type, image };
+        return pokemonFiltered;
+      })
+    );
+    (await actualPokemonData).forEach((pokemon) => {
+      try {
+        new HomePokemonCard(pokemon, pokemonListContainer);
+      } catch (error) {
+        throw new Error(
+          "Something went wrong conecting to databade, please reload this page."
+        );
+      }
+    });
   }
 }
 

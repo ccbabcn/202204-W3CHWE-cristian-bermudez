@@ -3,13 +3,13 @@ import Component from "../Component.js";
 class HomePokemonCard extends Component {
   id;
   order;
-  constructor(order, id, name, type, image, parentElement) {
+  constructor(pokemon, parentElement) {
     super(parentElement, "li", "pokemons-container__card");
-    this.order = order;
-    this.name = name;
-    this.type = type;
-    this.image = image;
-    this.id = id;
+    this.order = pokemon.order;
+    this.name = pokemon.name;
+    this.type = pokemon.type;
+    this.image = pokemon.image;
+    this.id = pokemon.id;
     this.render();
   }
 
@@ -20,7 +20,8 @@ class HomePokemonCard extends Component {
       src="${this.image}"
       alt="Image of Pokémon ${this.name}">
     <h2>${this.name}</h2>
-    <ul>
+    <ul class="pokemons-container__details">
+      <li># ${this.order}</li>
       <li>${this.type}</li>
     </ul>
   
