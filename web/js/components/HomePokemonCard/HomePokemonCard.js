@@ -11,7 +11,25 @@ class HomePokemonCard extends Component {
     this.type = pokemon.type;
     this.image = pokemon.image;
     this.id = pokemon.id;
+    this.pokemon = pokemon;
     this.render();
+    this.catchPokemon();
+  }
+
+  catchPokemon(id) {
+    if (this.id === id) {
+      try {
+        fetch("http://localhost:4000/pokemon/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.pokemon),
+        });
+      } catch (error) {
+        throw new Error("This pokémon is already catched");
+      }
+    }
   }
 
   render() {
@@ -34,7 +52,7 @@ class HomePokemonCard extends Component {
       new Button(
         buttonParent,
         "pokemons-container__Catch-button",
-        () => {},
+        () => this.catchPokemon(this.id),
         "CAPTURE"
       );
     } catch (error) {
