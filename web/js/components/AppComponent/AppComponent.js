@@ -49,7 +49,13 @@ class AppComponent extends Component {
       })
     );
     (await actualPokemonData).forEach((pokemon) => {
-      new HomePokemonCard(pokemon, pokemonListContainer);
+      try {
+        new HomePokemonCard(pokemon, pokemonListContainer);
+      } catch (error) {
+        throw new Error(
+          "Something went wrong conecting to databade, please reload this page."
+        );
+      }
     });
   }
 }
