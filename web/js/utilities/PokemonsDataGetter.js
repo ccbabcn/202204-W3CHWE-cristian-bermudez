@@ -16,13 +16,4 @@ class PokemonsDataGetter {
   }
 }
 
-// const getEachPokemonData = async () => {
-//   const eachPokeResponse = await fetchAllPokeData(limitNumber);
-
-//   eachPokeResponse.results.forEach(({ url.split("/").slice(-2,-1).pop() }) => {
-//     const fetchActualPokeData = async (actualUrl) => {
-//       const actualPokeInfo = await fetch(actualUrl);
-//       const thispokedata = await actualPokeInfo.json();
-//       return thispokedata;
-
 export default PokemonsDataGetter;
