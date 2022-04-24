@@ -1,7 +1,7 @@
 import Button from "../Button/Button.js";
 import Component from "../Component.js";
 
-class HomePokemonCard extends Component {
+class FavouritesPokemonCard extends Component {
   id;
   order;
   constructor(pokemon, parentElement) {
@@ -13,22 +13,19 @@ class HomePokemonCard extends Component {
     this.id = pokemon.id;
     this.pokemon = pokemon;
     this.render();
-    this.catchPokemon();
+    this.releasePokemon();
   }
 
-  catchPokemon(id) {
+  releasePokemon(id) {
     if (this.id === id) {
       try {
-        fetch("http://localhost:4000/pokemon/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.pokemon),
+        fetch(`http://localhost:4000/pokemon/${id}`, {
+          method: "DELETE",
         });
       } catch (error) {
         throw new Error("This pokémon is already catched");
       }
+      window.location.reload();
     }
   }
 
@@ -49,11 +46,12 @@ class HomePokemonCard extends Component {
       const buttonParent = document.querySelector(
         ".pokemons-container__card:last-child"
       );
+
       new Button(
         buttonParent,
-        "pokemons-container__catch-button",
-        () => this.catchPokemon(this.id),
-        "CAPTURE"
+        "pokemons-container__release-button",
+        () => this.releasePokemon(this.id),
+        "RELEASE"
       );
     } catch (error) {
       throw new Error("Something went wrong, try loading this page again");
@@ -61,4 +59,4 @@ class HomePokemonCard extends Component {
   }
 }
 
-export default HomePokemonCard;
+export default FavouritesPokemonCard;
