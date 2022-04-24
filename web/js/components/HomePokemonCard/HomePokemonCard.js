@@ -19,7 +19,7 @@ class HomePokemonCard extends Component {
   catchPokemon(id) {
     if (this.id === id) {
       try {
-        fetch("http://localhost:4000/pokemon/", {
+        fetch("https://isdipokeapi.herokuapp.com/pokemon", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
