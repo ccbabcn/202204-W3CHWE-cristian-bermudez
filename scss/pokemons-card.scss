@@ -4,8 +4,23 @@
   h2 {
     text-transform: capitalize;
   }
-
+  button {
+    cursor: pointer;
+    top: 50%;
+    background-color: $dark-green;
+    color: $bone-white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+  }
+  button:hover {
+    background-color: $grey-brown;
+  }
+  button:active {
+    background-color: $main-orange;
+  }
   &__list {
+    padding: 0;
     max-width: 100%;
     display: flex;
     flex-direction: row;
@@ -18,17 +33,20 @@
     flex-direction: column;
     align-items: center;
     background: #75fad2;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     margin: 30px 10px;
     justify-content: center;
 
     ul {
+      display: flex;
       list-style: none;
-      padding: 0px;
+      padding: 5px 0px;
+      justify-content: space-between;
+      gap: 10px;
       > li {
-        color: $bone-white;
+        color: $dark-green;
         font-weight: 500;
         text-transform: uppercase;
       }
