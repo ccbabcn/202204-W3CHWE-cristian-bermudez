@@ -3,8 +3,8 @@ class PokemonsDataGetter {
     this.endPoint = endPoint;
   }
 
-  async getShownPokemonsData() {
-    const shownPokemonsResponse = await fetch(this.endPoint);
+  async getShownPokemonsData(offset) {
+    const shownPokemonsResponse = await fetch(`${this.endPoint}${offset}`);
     const shownPokemonsData = await shownPokemonsResponse.json();
     return shownPokemonsData;
   }
