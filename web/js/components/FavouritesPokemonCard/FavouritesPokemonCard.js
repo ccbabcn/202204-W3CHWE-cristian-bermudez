@@ -16,10 +16,10 @@ class FavouritesPokemonCard extends Component {
     this.releasePokemon();
   }
 
-  releasePokemon(id) {
+  async releasePokemon(id) {
     if (this.id === id) {
       try {
-        fetch(`https://isdipokeapi.herokuapp.com/pokemon/${id}`, {
+        await fetch(`https://isdipokeapi.herokuapp.com/pokemon/${id}`, {
           method: "DELETE",
         });
       } catch (error) {
