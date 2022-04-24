@@ -17,7 +17,7 @@ class FavouritesAppComponent extends Component {
     );
     new MyPokemonsDataGetter();
     const pokemonsData = new MyPokemonsDataGetter(
-      `http://localhost:4000/pokemon`
+      `https://isdipokeapi.herokuapp.com/pokemon`
     );
 
     const results = await pokemonsData.getMyPokemonsData();
