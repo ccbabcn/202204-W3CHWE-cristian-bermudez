@@ -1,3 +1,4 @@
+import Button from "../Button/Button.js";
 import Component from "../Component.js";
 
 class HomePokemonCard extends Component {
@@ -26,6 +27,19 @@ class HomePokemonCard extends Component {
     </ul>
   
   `;
+    try {
+      const buttonParent = document.querySelector(
+        ".pokemons-container__card:last-child"
+      );
+      new Button(
+        buttonParent,
+        "pokemons-container__Catch-button",
+        () => {},
+        "CAPTURE"
+      );
+    } catch (error) {
+      throw new Error("Something went wrong, try loading this page again");
+    }
   }
 }
 

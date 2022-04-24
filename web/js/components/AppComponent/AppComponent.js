@@ -3,10 +3,9 @@ import Component from "../Component.js";
 import PokemonsDataGetter from "../../utilities/PokemonsDataGetter.js";
 
 class AppComponent extends Component {
-  constructor(parentElement, limit) {
+  constructor(parentElement, urlOffset) {
     super(parentElement, "div", "pokemons-container");
-    this.limit = limit;
-
+    this.urlOffset = urlOffset;
     this.render();
   }
 
@@ -19,9 +18,11 @@ class AppComponent extends Component {
     );
 
     const pokemonsData = new PokemonsDataGetter(
-      "https://pokeapi.co/api/v2/pokemon/"
+      `https://pokeapi.co/api/v2/pokemon/`
     );
-    const { results } = await pokemonsData.getShownPokemonsData();
+    const { results } = await pokemonsData.getShownPokemonsData(
+      `?offset=${this.urlOffset}&limit=20`
+    );
 
     const actualPokemonData = Promise.all(
       results.map(async (listedPokemon) => {
